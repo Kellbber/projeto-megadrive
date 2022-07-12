@@ -1,8 +1,9 @@
 export enum RoutePath {
-    START = "/start",
+    START = "/",
     LOGIN = "/login",
     HOMEPAGE="/homepage",
     PROFILE= '/profile',
+    ACCOUNT= '/createaccount',
     SETTINGS = "/settings",
     SETTINGS_USERS = "users",
     SETTINGS_PROFILES = "profiles",

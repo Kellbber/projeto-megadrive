@@ -1,6 +1,8 @@
 import * as S from './style'
 import BoxLogin from 'components/BoxLogin';
+
 const Login = () => {
+
   return (
     <S.Login>
         <S.LoginContent>
