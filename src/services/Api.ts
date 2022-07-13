@@ -4,18 +4,17 @@ const api = axios.create({
   baseURL: "http://mega-api-prod.herokuapp.com/",
 });
 
-
-
-api.interceptors.request.use((config: any)=>{
-    try{
-    const token = localStorage.getItem('jwt');
-    if(token){
-        config.headers.Authorization = `Bearrer ${token}`
+// intercepta o que vai as chamadas para o backend.
+api.interceptors.request.use((config: any) => {
+  try {
+    const token = localStorage.getItem("jwtLocalStorage");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return config
-    }catch(error: any){
-        console.log(error)
-    }
-})
+    return config;
+  } catch (error: any) {
+    console.log(error);
+  }
+});
 
 export default api;

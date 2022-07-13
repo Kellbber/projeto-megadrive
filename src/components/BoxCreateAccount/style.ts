@@ -8,7 +8,7 @@ type ColorInput = {
   image?: Element;
 };
 
-export const BoxLogin = styled.section`
+export const BoxLogin = styled.form`
   ${({ theme }) => css`
     background: ${theme.colors.baseBg1};
     width: 330px;
@@ -46,7 +46,7 @@ export const BoxLoginText = styled.h3`
     font-family: ${theme.constants.headingFontFamily};
   `}
 `;
-export const BoxLoginForm1 = styled.form<ColorInput>`
+export const BoxLoginForm1 = styled.div<ColorInput>`
   display: flex;
   align-items: center;
   margin-top: 2rem;

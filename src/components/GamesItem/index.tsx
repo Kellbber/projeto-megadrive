@@ -1,35 +1,29 @@
-import{ useEffect, useState } from 'react'
-import { findAllGames } from 'services/gameService';
-import * as S from './style'
-const GamesItem = () => {
-    const [games, setGames] = useState<any[]>([]);
+interface cardProps {
+  game: {
+    id: string;
+    title: string;
+    coverImageUrl: string;
+    description: string;
+    year: number;
+    imdbScore: number;
+    trailerYoutubeUrl: string;
+    genres: string;
 
-    useEffect(()=>{
-      getAllGames();
-    }, [])
-      const getAllGames = async () =>{
-        const response = await findAllGames.allGames();
-    
-        console.log(`jogos exibidos`, response)
-        setGames(response.data.results)
-      }
+  }
+} 
+
+
+const Card = ({ game }: cardProps) => {
   return (
-
-    <S.GamesItem >
-        <S.GamesItemImage src="" alt=""/>
-        <div>
-            <S.GamesItemName>
-                {}
-            </S.GamesItemName>
-            <S.GamesItemPrice>
-                {}
-            </S.GamesItemPrice>
-            <S.GamesItemDescription>
-                {}
-            </S.GamesItemDescription>
-        </div>
-    </S.GamesItem>
+    <div className='card'>
+      <img src={game.coverImageUrl} className="game-image" alt="Imagem do jogo" />
+      <div>
+        <h2>{game.title}</h2>
+        <p>{game.trailerYoutubeUrl}</p>
+        <p>{game.description}</p>
+      </div>
+    </div>
   )
 }
 
-export default GamesItem;
+export default Card;
