@@ -27,7 +27,7 @@ const BoxLogin = (props: any) => {
       localStorage.setItem("jwt", jwt);
       swal({
         title: 'Seja Bem-vindo',
-        icon: 'sucess',
+        icon: 'success',
         timer: 3000,
       })
       Navigate("/profile");

@@ -1,17 +1,22 @@
 import * as S from "./style";
-
+import swall from "sweetalert";
 import { useEffect, useState } from "react";
-import { userService } from "services/userService";
+import { useNavigate } from "react-router-dom";
+import { userLoggedService } from "services/authService";
+import { findAllProfiles } from "services/profileService";
+import { profile } from "console";
+import CardProfile from "components/CardProfile";
 
-interface Profiles{
+interface Profiles {
+  id: string;
   title: string;
-  imageCoverUrl: string;
+  imageUrl: string;
   gameId?: string;
   favoriteGameId?: string;
   userId: string;
 }
 interface User {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -19,34 +24,83 @@ interface User {
   cpf: string;
 }
 const Profile = () => {
+  const navigate = useNavigate();
   const [profiles, setProfiles] = useState<Profiles[]>([]);
-  const [userLogged, setUserLogged]= useState<User>({
-    _id: '',
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    cpf: '',
-  })
-const jwt = localStorage.getItem('jwtLocalStorage')
+  const [userLogged, setUserLogged] = useState<User>({
+    id: "",
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    cpf: "",
+  });
 
-const getUserLogged = async ()=>{
-  // const response = await userService.findUserById();
+  const [profileUser, setProfileUser] = useState<Profiles[]>([]);
 
-}
-useEffect(()=>{
-getUserLogged();
-},[])
+  useEffect(() => {
+    getUserLogged();
+    getAllProfiles();
+  }, []);
+  const jwt = localStorage.getItem("jwt");
+
+  const getUserLogged = async () => {
+    const response = await userLoggedService.userLogged();
+    localStorage.setItem("idUser", response.data.id);
+    setUserLogged(response.data);
+  };
+
+  const getAllProfiles = async () => {
+    if (!jwt) {
+      swall({
+        title: "ERRO!",
+        text: "Faça o login antes de entrar na página de profiles",
+        icon: "error",
+        timer: 7000,
+      });
+      navigate("/login");
+    } else {
+      const response = await findAllProfiles.allProfiles();
+
+      setProfiles(response.data);
+
+      if (profiles) {
+        findProfiles(response.data);
+      }
+    }
+  };
+
+  const findProfiles = (profiles: Profiles[]) => {
+    const userId = localStorage.getItem("idUser");
+    const profile = profiles.filter(
+      (profile: any) => profile.userId === userId
+    );
+
+    if (profile) {
+      setProfileUser(profile);
+    }
+    console.log(profileUser);
+  };
+
+  function goToHomePage(id: string) {
+    navigate(`/homepage/${id}`);
+  }
   return (
     <S.ProfileContent>
       <S.ProfileMain>
-        <h1>aqui fica o profile</h1>
+        <S.allCardProfile>
+          {profileUser?.map((profile, index) => (
+            <S.uniqueCardProfile
+              onClick={() => {
+                goToHomePage(profile.id);
+              }}
+              key={index}
+            >
+              <img src={profile.imageUrl} alt="imagem do perfil" />
+              <h1>{profile.title}</h1>
+            </S.uniqueCardProfile>
+          ))}
+        </S.allCardProfile>
       </S.ProfileMain>
-      <header>
-        <S.ProfileHeaderDetails>
-          aqui ficará o nome do profile
-        </S.ProfileHeaderDetails>
-      </header>
     </S.ProfileContent>
   );
 };

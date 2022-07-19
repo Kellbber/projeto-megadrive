@@ -1,5 +1,4 @@
 import swal from "sweetalert";
-import { StringLiteralLike } from "typescript";
 import api from "./Api";
 interface userLoginObjt {
   email: string;
@@ -33,4 +32,7 @@ const userLoggedService = {
       }),
 };
 
+
+
 export { loginService, userLoggedService };
+

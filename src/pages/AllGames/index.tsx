@@ -14,6 +14,7 @@ interface Games {
   description: string;
   year: number;
   imdbScore: number;
+
   trailerYoutubeUrl: string;
   genres: string;
 }
@@ -21,6 +22,7 @@ interface User {
     name: string;
     email: string;
     _id: string;
+    isAdmin: boolean;
   }
 
 const AllGames = () => {
@@ -28,10 +30,12 @@ const AllGames = () => {
   const [userLogged, setUserLogged] = useState<User>({
     email: '',
     name: '',
-    _id: ''
+    _id: '',
+    isAdmin: false,
   });
   const navigate = useNavigate();
-  const jwt = localStorage.getItem("jwtLocalStorage");
+
+  const jwt = localStorage.getItem("jwt");
 
   const getAllGames = async () => {
     if (!jwt) {
@@ -52,8 +56,8 @@ const AllGames = () => {
             timer: 7000,
         })
       }else{
-        console.log('Personagens exibidos', response);
-        setGames(response.data.results);
+        console.log(response.data)
+        setGames(response.data);
       }
     }
   };
@@ -62,17 +66,20 @@ const AllGames = () => {
   const getUserLogged = async ()=>{
  
     const response = await userLoggedService.userLogged();
+
     setUserLogged(response.data);
 
   }
   useEffect(() => {
     getAllGames();
     getUserLogged();
-  });
+  },[]);
   return (
     <S.allGames>
+       
       <S.allGamesContent>
-        {games.map((game: Games, index) => (
+        <h1>All Games</h1>
+        {games?.map((game: Games, index) => (
           <Card game={game} key={index} />
         ))}
       </S.allGamesContent>

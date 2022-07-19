@@ -1,3 +1,5 @@
+import * as S from './style'
+
 interface cardProps {
   game: {
     id: string;
@@ -15,14 +17,16 @@ interface cardProps {
 
 const Card = ({ game }: cardProps) => {
   return (
-    <div className='card'>
-      <img src={game.coverImageUrl} className="game-image" alt="Imagem do jogo" />
+    <S.GamesItem>
+      <S.GamesItemImage src={game.coverImageUrl}  alt="Imagem do jogo"/>
+
+
       <div>
         <h2>{game.title}</h2>
-        <p>{game.trailerYoutubeUrl}</p>
-        <p>{game.description}</p>
+        <p>{game.imdbScore}</p>
+        
       </div>
-    </div>
+      </S.GamesItem>
   )
 }
 

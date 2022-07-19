@@ -7,7 +7,7 @@ const api = axios.create({
 // intercepta o que vai as chamadas para o backend.
 api.interceptors.request.use((config: any) => {
   try {
-    const token = localStorage.getItem("jwtLocalStorage");
+    const token = localStorage.getItem("jwt");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

@@ -1,5 +1,5 @@
 import api from './Api'
-import swal from 'sweetalert'
+
 
 const findAllGames ={
     allGames: () =>

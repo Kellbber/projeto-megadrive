@@ -12,15 +12,22 @@ export const allGames = styled.section`
     color: ${theme.colors.textColor};
     display: flex;
     justify-content: space-between;
+
     `}
 `;
 export const allGamesContent = styled.main`
-  ${() => css`
-    
+  ${({theme}) => css`
+    background-color: ${theme.colors.baseBg2};
     width: calc(100% - 450px);
     padding: 20px;
     overflow: auto;
     height: 100vh;
     box-sizing: border-box;
+    h1{
+      font-family: ${theme.constants.bodyFontFamily};
+      font-size: ${theme.constants.headingFontSize}
+     
+    }
+
   `}
 `;

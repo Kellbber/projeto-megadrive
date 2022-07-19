@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const GamesItem = styled.div`
+export const ProfilesItem = styled.div`
 	${({ theme }) => css`
 		background: ${theme.colors.baseBg1};
 		border-radius: 16px;
@@ -25,14 +25,14 @@ export const GamesItem = styled.div`
 	`}
 `;
 
-export const GamesItemImage = styled.img`
+export const ProfilesItemImage = styled.img`
 
 		width: 150px;
 		
 
 `;
 
-export const GamesItemName = styled.h3`
+export const ProfilesItemName = styled.h3`
 	${({ theme }) => css`
 		${theme.mixins.bodyStyle()}
 		text-align: center;
@@ -41,7 +41,7 @@ export const GamesItemName = styled.h3`
 	`}
 `;
 
-export const GamesItemPrice = styled.strong`
+export const ProfilesItemPrice = styled.strong`
 	${({ theme }) => css`
 		${theme.mixins.bodyStyle()}
 		text-align: center;
@@ -51,7 +51,7 @@ export const GamesItemPrice = styled.strong`
 	`}
 `;
 
-export const GamesItemDescription = styled.small`
+export const ProfilesItemDescription = styled.small`
 	${({ theme }) => css`
 		${theme.mixins.bodyStyle()}
 		text-align: center;
