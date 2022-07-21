@@ -45,6 +45,7 @@ export const HomepageGameDiv = styled.div`
     justify-content: flex-start;
     border-radius: 1rem;
     font-family: ${theme.constants.bodyFontFamily};
+    font-size: .8rem;
   `}
 `;
 export const uniqueCardGame = styled.div`
@@ -88,12 +89,20 @@ export const HomepageHeaderDetailsDate = styled.p`
 
     button{
       list-style: none;
-      background: transparent;
+      background-color: ${theme.colors.baseBg3};
+      border-radius: 1rem;
       outline: none;
       font-family: ${theme.constants.bodyFontFamily};
       color: ${theme.colors.textColor};
       border: none;
       cursor: pointer;
+      transition: ease-in-out .3s;
+
+      &:hover{
+        transform: scale(1.1);
+        background-color: ${theme.colors.baseBg3};
+        border-radius: 1rem;
+      }
     }
   `}
 `;
@@ -106,6 +115,7 @@ export const HomepageHeaderDetailsImg = styled.img`
     align-self: center;
     padding: 1.5rem;
     margin-left: 5rem;
+    margin-top: 1rem;
   `}
 `;
 export const HomepageHeaderDetailsText = styled.h2`

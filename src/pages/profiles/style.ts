@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import background from "assets/images/background.jpg";
-
+import user from "../../assets/icons/profile2.png";
 type imageUser = {
   image: string;
 };
@@ -23,13 +23,14 @@ export const ProfileContent = styled.section`
 export const ProfileMain = styled.main`
   ${() => css`
     width: 100%;
-    padding: 20px;
+
     overflow: auto;
     height: 100vh;
     box-sizing: border-box;
     align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-direction: column;
   `}
 `;
 export const ProfileHeaderDetails = styled.div`
@@ -55,7 +56,7 @@ export const ProfileHeaderDetailsImg = styled.img`
 export const allCardProfile = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.colors.baseBg1};
-    width: 100%;
+    width: 95%;
     height: 50%;
     align-items: center;
     display: flex;
@@ -77,6 +78,91 @@ export const uniqueCardProfile = styled.div`
       width: 50%;
       margin-top: 1rem;
       border-radius: 2rem;
+    }
+  `}
+`;
+
+export const Header = styled.div`
+  margin: 1rem 0rem 1rem 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+export const Settings = styled.div`
+  ${({ theme }) => css`
+    width: 3%;
+    background-color: ${theme.colors.baseBg3};
+    height: 50%;
+    margin: 1rem 1rem 2rem 0.5rem;
+    display: flex;
+    border-radius: 1rem;
+    align-self: flex-end;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  `}
+`;
+
+export const userLogged = styled.div`
+  ${({ theme }) => css`
+    background-color: ${theme.colors.baseBg1};
+    width: 10%;
+    height: 50%;
+    border-radius: 1rem;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    align-self: flex-start;
+    img {
+      background-image: url(${user});
+      background-size: cover;
+      padding: 0.8rem;
+      display: flex;
+    }
+    h5 {
+      font-family: ${theme.constants.bodyFontFamily};
+    }
+  `}
+`;
+
+export const buttonModal = styled.button`
+  display: flex;
+  width: 50%;
+
+  background: transparent;
+  border: none;
+  button {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    cursor: pointer;
+  }
+`;
+export const UserModal = styled.form`
+  ${({ theme }) => css`
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 1rem 0;
+    label {
+      align-self: flex-start;
+      font-family: ${theme.constants.bodyFontFamily};
+      font-size: 1rem;
+      font-weight: ${theme.constants.bodyLineHeight};
+      margin-bottom: 0.5rem;
+      color: ${theme.colors.textColor};
+    }
+    input {
+      background-color: ${theme.colors.baseBg2};
+      margin-bottom: 1rem;
+      width: 100%;
+      border-radius: 2rem;
+      border: 1px solid black;
+      outline: none;
+      padding: 0.5rem;
     }
   `}
 `;

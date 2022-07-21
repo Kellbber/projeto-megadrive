@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 import { findProfileById } from "services/profileService";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { RiArrowGoBackLine } from "react-icons/ri";
 interface Profiles {
   id: string;
   title: string;
@@ -31,11 +31,11 @@ interface Games {
 
 const Homepage = () => {
   const navigate = useNavigate();
-  function goToAllGames(){
-    navigate('/allgames')
+  function goToAllGames() {
+    navigate("/allgames");
   }
-  function goToProfile(){
-    navigate('/profile')
+  function goToProfile() {
+    navigate("/profile");
   }
   const { id } = useParams();
 
@@ -57,50 +57,42 @@ const Homepage = () => {
   });
   return (
     <S.Homepage>
-
       <S.HomepageContent>
-      <S.HomepageGameTitle>
-        Favorited Games
-      </S.HomepageGameTitle>
+        <S.HomepageGameTitle>Favorited Games</S.HomepageGameTitle>
         <S.HomepageGameDiv>
-      {profileId?.favoriteGames?.games?.map((game: Games, index) => (
-        <S.uniqueCardGame key={index}>
-          
-          <img src={game.coverImageUrl} alt="" />
-            <h1>{game.title}</h1>
-            <p>{game.imdbScore}</p>
-        
-        </S.uniqueCardGame>
-      ))}
-      </S.HomepageGameDiv>
-      <S.HomepageGameTitle>
-        Purshased Games
-      </S.HomepageGameTitle>
-      <S.HomepageGameDiv>
-      {profileId?.games?.map((game: Games, index) => (
-        <S.uniqueCardGame key={index}>
-          
-          <img src={game.coverImageUrl} alt="" />
-            <h1>{game.title}</h1>
-            <p>{game.imdbScore}</p>
-        
-        </S.uniqueCardGame>
-      ))}
-      </S.HomepageGameDiv>
+          {profileId?.favoriteGames?.games?.map((game: Games, index) => (
+            <S.uniqueCardGame key={index}>
+              <img src={game.coverImageUrl} alt="" />
+              <h1>{game.title}</h1>
+              <p>Score: {game.imdbScore}</p>
+            </S.uniqueCardGame>
+          ))}
+        </S.HomepageGameDiv>
+        <S.HomepageGameTitle>Purchased Games</S.HomepageGameTitle>
+        <S.HomepageGameDiv>
+          {profileId?.games?.map((game: Games, index) => (
+            <S.uniqueCardGame key={index}>
+              <img src={game.coverImageUrl} alt="" />
+              <h1>{game.title}</h1>
+              <p>Score: {game.imdbScore}</p>
+            </S.uniqueCardGame>
+          ))}
+        </S.HomepageGameDiv>
       </S.HomepageContent>
       <S.HomepageHeaderDetails>
-  <S.HomepageHeaderDetailsDate>
-  <S.HomepageHeaderDetailsImg/>
-  <S.HomepageHeaderDetailsText onClick={goToProfile}>
-  {profileId?.title}
-  </S.HomepageHeaderDetailsText>
-  <S.HomepageHeaderDetailsText>
-  {dateDescription}
-  </S.HomepageHeaderDetailsText>
-  <button onClick={goToAllGames}>MORE GAMES</button>
-  </S.HomepageHeaderDetailsDate>
- 
-</S.HomepageHeaderDetails>
+
+        <S.HomepageHeaderDetailsDate>
+        <RiArrowGoBackLine cursor='pointer'  size={25} onClick={goToProfile}/>
+          <S.HomepageHeaderDetailsImg />
+          <S.HomepageHeaderDetailsText onClick={goToProfile}>
+            {profileId?.title}
+          </S.HomepageHeaderDetailsText>
+          <S.HomepageHeaderDetailsText>
+            {dateDescription}
+          </S.HomepageHeaderDetailsText>
+          <button onClick={goToAllGames}>MORE GAMES</button>
+        </S.HomepageHeaderDetailsDate>
+      </S.HomepageHeaderDetails>
     </S.Homepage>
   );
 };
