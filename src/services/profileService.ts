@@ -1,3 +1,4 @@
+import { Profile } from "types/profile-type";
 import api from "./Api";
 
 const findAllProfiles = {
@@ -19,4 +20,15 @@ const findProfileById = {
       })
       .catch((error: any) => console.log(error)),
 };
-export { findAllProfiles, findProfileById};
+
+const createProfile = {
+  createProfile: async (newProfile: Profile)=>
+  api
+  .post('/profile', newProfile)
+  .then((response: any)=> {
+    return response;
+  })
+}
+
+
+export { findAllProfiles, findProfileById, createProfile};

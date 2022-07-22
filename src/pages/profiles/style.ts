@@ -1,9 +1,7 @@
 import styled, { css } from "styled-components";
 import background from "assets/images/background.jpg";
 import user from "../../assets/icons/profile2.png";
-type imageUser = {
-  image: string;
-};
+
 export const ProfileContent = styled.section`
   ${({ theme }) => css`
     width: 100vw;
@@ -127,8 +125,8 @@ export const userLogged = styled.div`
 
 export const buttonModal = styled.button`
   display: flex;
-  width: 50%;
-
+  width: 100%;
+  justify-content: flex-end;
   background: transparent;
   border: none;
   button {
@@ -136,23 +134,26 @@ export const buttonModal = styled.button`
     background-color: transparent;
     display: flex;
     cursor: pointer;
+    
+    margin: 0;
   }
 `;
 export const UserModal = styled.form`
   ${({ theme }) => css`
     display: flex;
     width: 100%;
-    margin-top: 1rem;
+   
+    
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 0 0 1rem 0;
+   
     label {
       align-self: flex-start;
       font-family: ${theme.constants.bodyFontFamily};
       font-size: 1rem;
       font-weight: ${theme.constants.bodyLineHeight};
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.1rem;
       color: ${theme.colors.textColor};
     }
     input {
@@ -166,3 +167,12 @@ export const UserModal = styled.form`
     }
   `}
 `;
+export const userModalTitle = styled.h5`
+${({theme})=>css`
+    font-family: ${theme.constants.headingFontFamily};
+    color: ${theme.colors.textColor};
+    font-size: 1rem;
+
+`}
+
+`

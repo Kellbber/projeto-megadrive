@@ -4,6 +4,7 @@ export enum RoutePath {
     LOGIN = "/login",
     HOMEPAGE="/homepage/:id",
     PROFILE= '/profile',
+    CREATE_PROFILE = '/createprofile',
     ACCOUNT= '/createaccount',
     SETTINGS = "/settings",
     SETTINGS_USERS = "/settingsusers",

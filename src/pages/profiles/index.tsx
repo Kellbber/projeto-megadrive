@@ -9,6 +9,7 @@ import { FiSettings } from "react-icons/fi";
 import Modal from 'react-modal'
 import { AiOutlineRollback } from "react-icons/ai";
 import SaveButton from "components/SaveButton";
+import CreateProfile from "components/CreateProfile";
 interface Profiles {
   id: string;
   title: string;
@@ -123,7 +124,9 @@ const Profile = () => {
       }
     }
   };
-
+function goToCreateProfile() {
+navigate('/createprofile')
+}
   const findProfiles = (profiles: Profiles[]) => {
     const userId = localStorage.getItem("idUser");
     const profile = profiles.filter(
@@ -165,6 +168,9 @@ const Profile = () => {
               <h1>{profile.title}</h1>
             </S.uniqueCardProfile>
           ))}
+          <S.uniqueCardProfile>
+            <h5 onClick={goToCreateProfile}>New Profile</h5>
+          </S.uniqueCardProfile>
         </S.allCardProfile>
       </S.ProfileMain>
       <Modal
@@ -178,19 +184,24 @@ const Profile = () => {
             </button>
           </S.buttonModal>
           <S.UserModal onSubmit={handleSubmit}>
+            <S.userModalTitle>Update User</S.userModalTitle>
             <label htmlFor="name">Name:</label>
-          <input type="text" name="Name" defaultValue={userLogged.name} />
+          <input type="text"  name="Name" defaultValue={userLogged.name} />
           <label htmlFor="email">Email:</label>
           <input type="text" name="email" defaultValue={userLogged.email} />
           <label htmlFor="password">Password:</label>
-          <input type="password" name="password" defaultValue={userLogged.password} />
+          <input type="password" required name="password" defaultValue={userLogged.password} />
           <label htmlFor="confirmPass">Confirm Pass:</label>
-          <input type="password" name="confirmPass" defaultValue={userLogged.confirmPassword} />
-          <label htmlFor="cpf">Confirm Pass:</label>
+          <input type="password" required name="confirmPass" defaultValue={userLogged.confirmPassword} />
+          <label htmlFor="cpf">CPF:</label>
           <input type="text" name="cpf" defaultValue={userLogged.cpf} />
           <SaveButton type="submit"/>
           </S.UserModal>
           </Modal>
+
+          
+
+
     </S.ProfileContent>
   );
 };
