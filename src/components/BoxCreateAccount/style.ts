@@ -46,6 +46,7 @@ export const BoxLoginText = styled.h3`
     font-family: ${theme.constants.headingFontFamily};
   `}
 `;
+
 export const BoxLoginForm1 = styled.div<ColorInput>`
   display: flex;
   align-items: center;

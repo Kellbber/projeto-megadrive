@@ -1,13 +1,10 @@
 import { useState } from 'react';
 
-import * as S from './style'
-import {GiBroadsword} from 'react-icons/gi'
-import { AiOutlineRollback } from 'react-icons/ai';
-import SaveButton from 'components/SaveButton';
+import ButtonLarge from 'components/ButtonLarge';
+import { useNavigate } from 'react-router-dom';
 import { createProfile } from 'services/profileService';
 import { Profile } from 'types/profile-type';
-import { useNavigate } from 'react-router-dom';
-import ButtonLarge from 'components/ButtonLarge';
+import * as S from './style';
 
 
 const CreateProfile = () => {

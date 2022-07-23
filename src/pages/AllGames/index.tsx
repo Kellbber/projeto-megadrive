@@ -56,7 +56,7 @@ const AllGames = () => {
             timer: 7000,
         })
       }else{
-        console.log(response.data)
+        
         setGames(response.data);
       }
     }

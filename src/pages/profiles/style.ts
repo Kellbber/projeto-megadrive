@@ -72,6 +72,7 @@ export const uniqueCardProfile = styled.div`
     flex-direction: column;
     border-radius: 2rem;
     cursor: pointer;
+
     img {
       width: 50%;
       margin-top: 1rem;
@@ -172,6 +173,19 @@ ${({theme})=>css`
     font-family: ${theme.constants.headingFontFamily};
     color: ${theme.colors.textColor};
     font-size: 1rem;
+
+`}
+
+`
+
+export const buttonDelete = styled.div`
+${({theme})=>css`
+    width: 20%;
+    background: transparent;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
 
 `}
 

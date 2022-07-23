@@ -12,6 +12,8 @@ export const ButtonLarge = styled.button`
 		padding: 3rem;
 		cursor: pointer;
         align-self: center;
+        border: none;
+        list-style: none;
 
 	`}
 `;
