@@ -54,7 +54,7 @@ interface GamesProfile {
     {
       genre: string;
       title: string;
-      id: string;
+      id: string[];
     }
   ];
 }
@@ -82,6 +82,7 @@ const Homepage = () => {
       const get = await homepageGames.allGames(id);
       console.log(get.data);
       setGamesProfile(get.data);
+      setControl(false);
     }
   };
 
@@ -103,7 +104,7 @@ const Homepage = () => {
   }
 
   const { id } = useParams();
-
+  const [control, setControl] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profiles>();
 
   const [gamesProfile, setGamesProfile] = useState<GamesProfile>();
@@ -145,12 +146,14 @@ const Homepage = () => {
     }
   }
 
+
   useEffect(() => {
     if (id) {
       getProfileById();
     }
+    console.log(`rodou`)
     getHomeGames();
-  }, []);
+  }, [control]);
 
   const dateDescription = DateTime.now().toLocaleString({
     ...DateTime.DATE_SHORT,
@@ -172,8 +175,9 @@ const Homepage = () => {
                   cursor="pointer"
                   onClick={() => {
                     favoriteGame.favorite(id ?? "", game.id);
+                    setControl(true);
                   }}
-                />
+                />  
               </S.iconFavorite>
               <img src={game.coverImageUrl} alt="" />
               <h5>{game.title}</h5>
@@ -185,17 +189,18 @@ const Homepage = () => {
         <S.HomepageGameDiv>
           {gamesProfile?.games?.map((game, index) => (
             <S.uniqueCardGame key={index}>
-              {profile?.favoriteGames?.games?.map((gamesFav: Games)=>
+              
               
               <AiFillHeart
-              color={game.id[0] == gamesFav.id?"red":""}
+              color={gamesProfile.favoriteGames?.games?.find((gameFav:Games)=>gameFav.id===game.id[0])?"red":"gray"}
               size={20}
               cursor="pointer"
               onClick={() => {
-                favoriteGame.favorite(profile.id, game.id[0]);
+                favoriteGame.favorite(id??"", game.id[0]);
+                setControl(true);
               }}
             /> 
-              )}
+              
              
               <S.favoriteBox>
                 <h5>Nome: {game.title}</h5>
