@@ -1,8 +1,9 @@
 import SaveButton from "components/SaveButton";
 import { useEffect, useState } from "react";
-import { AiOutlineRollback } from "react-icons/ai";
+import { AiOutlineRollback, AiOutlineLogout } from "react-icons/ai";
 import { FiSettings } from "react-icons/fi";
 import { IoPersonAddOutline } from "react-icons/io5";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { userLoggedService } from "services/authService";
@@ -109,7 +110,7 @@ const Profile = () => {
         icon: "error",
         timer: 7000,
       });
-      navigate("/login");
+      navigate("/");
     } else {
       const response = await findAllProfiles.allProfiles();
 
@@ -139,6 +140,27 @@ const Profile = () => {
     navigate(`/homepage/${id}`);
   }
 
+function logout (){
+setUserLogged({
+  id: "",
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  cpf: "",
+})
+localStorage.removeItem(`jwt`)
+
+swall({
+  title: "Certinho!",
+  text: "Usuário deslogado com sucesso!",
+  icon: "success",
+  timer: 5000,
+
+})
+navigate('/')
+}
+  
 
   return (
     <S.ProfileContent>
@@ -210,6 +232,15 @@ const Profile = () => {
           <label htmlFor="cpf">CPF:</label>
           <input type="text" name="cpf" defaultValue={userLogged.cpf} />
           <SaveButton type="submit" />
+          <S.deleteModalext>
+          Gostaria de deslogar?{" "}
+              <AiOutlineLogout
+                size={25}
+                color="red"
+                cursor="pointer"
+                onClick={logout}
+              />
+              </S.deleteModalext>
         </S.UserModal>
       </Modal>
     </S.ProfileContent>

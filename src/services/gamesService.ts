@@ -1,5 +1,6 @@
 import api from './Api'
 import swal from 'sweetalert'
+import { games } from 'mocks/games';
 
 interface Games{
 
@@ -66,4 +67,27 @@ const updateGame = {
   })
 }
 
-export {findAllGames, deleteGame, updateGame};
+const createGame = {
+  create: async (newGame: Games) =>
+  api.post(`/games`,{
+    title: newGame.title,
+    coverImageUrl: newGame.coverImageUrl,
+    description: newGame.description,
+    year: newGame.year,
+    imdbScore: newGame.imdbScore,
+    trailerYoutubeUrl: newGame.trailerYoutubeUrl,
+    gameplayYoutubeUrl: newGame.gameplayYoutubeUrl,
+    genreName: newGame.genreName,
+  })
+  .then((response:any)=>response)
+  .catch((error: any) => {
+    swal({
+      title: "Erro!",
+      text: `${error.message}`,
+      icon: "error",
+      timer: 7000,
+    })
+  })
+}
+
+export {findAllGames, deleteGame, updateGame, createGame};

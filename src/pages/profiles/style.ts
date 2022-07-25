@@ -190,3 +190,13 @@ ${({theme})=>css`
 `}
 
 `
+export const deleteModalext = styled.h3`
+  ${({ theme }) => css`
+    width: 100%;
+    text-align: center;
+    font-family: ${theme.constants.headingFontFamily};
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+  `}`
+

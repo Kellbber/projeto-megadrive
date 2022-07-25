@@ -11,7 +11,12 @@ const loginService = {
       .then((response: any) => {
         return response;
       })
-      .catch((error: any) => console.log("ERRO NA CHAMADA", error)),
+      .catch((error: any) =>  swal({
+        title: "Erro",
+        text: `Usuário ou senha incorretos!`,
+        icon: "error",
+        timer: 7000,
+      })),
 };
 
 const userLoggedService = {
