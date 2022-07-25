@@ -159,7 +159,7 @@ const Profile = () => {
 
         <S.allCardProfile>
           {profileUser?.map((profile, index) => (
-            <S.uniqueCardProfile>
+            <S.uniqueCardProfile key={index}>
               <img
                 src={profile.imageUrl}
                 alt="imagem do perfil"

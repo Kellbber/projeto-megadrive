@@ -1,11 +1,12 @@
 import * as S from "./style";
 import { findAllGames } from "services/gamesService";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import swall from "sweetalert";
 
 import Card from "components/GamesItem";
 import { userLoggedService } from "services/authService";
+import { findProfileById } from "services/profileService";
 
 interface Games {
   id: string;
@@ -14,23 +15,43 @@ interface Games {
   description: string;
   year: number;
   imdbScore: number;
-
+  gameplayYoutubeUrl: string,
   trailerYoutubeUrl: string;
-  genres: string;
+  genres:[{
+    name: string;
+    createdAt?:string;
+    updatedAt?:string;
+  }]
+
+  
 }
 interface User {
-    name: string;
-    email: string;
-    _id: string;
-    isAdmin: boolean;
-  }
+  name: string;
+  email: string;
+  id: string;
+  isAdmin: boolean;
+}
+interface Profiles {
+  id: string;
+  title: string;
+  imageUrl: string;
+  gameId?: string;
+  games?: [];
+  favoriteGames?: {
+    games?: Games[];
+  };
+  favoriteGameId?: string;
+  userId: string;
+}
 
 const AllGames = () => {
+  const [profile, setProfile] = useState<Profiles>();
+  const { id } = useParams();
   const [games, setGames] = useState<Games[]>([]);
   const [userLogged, setUserLogged] = useState<User>({
-    email: '',
-    name: '',
-    _id: '',
+    email: "",
+    name: "",
+    id: "",
     isAdmin: false,
   });
   const navigate = useNavigate();
@@ -48,39 +69,42 @@ const AllGames = () => {
       navigate("/");
     } else {
       const response = await findAllGames.allGames();
-      if(response.status === 204){
+
+      if (response.status === 204) {
         swall({
-            title: 'Info',
-            text: 'Não existe jogo cadastrado!',
-            icon: 'info',
-            timer: 7000,
-        })
-      }else{
-        
+          title: "Info",
+          text: "Não existe jogo cadastrado!",
+          icon: "info",
+          timer: 7000,
+        });
+      } else {
         setGames(response.data);
       }
     }
   };
+  const getProfileById = async () => {
+    const response = await findProfileById.profileById(id ?? "");
+    setProfile(response.data);
+  };
 
-
-  const getUserLogged = async ()=>{
- 
+  const getUserLogged = async () => {
     const response = await userLoggedService.userLogged();
-
     setUserLogged(response.data);
-
-  }
+  };
   useEffect(() => {
+    if (id) {
+      getProfileById();
+    }
     getAllGames();
     getUserLogged();
-  },[]);
+  }, []);
   return (
     <S.allGames>
-       
       <S.allGamesContent>
         <h1>All Games</h1>
         {games?.map((game: Games, index) => (
-          <Card game={game} key={index} />
+          <Card game={game} key={index} user={userLogged} />
+          
         ))}
       </S.allGamesContent>
     </S.allGames>

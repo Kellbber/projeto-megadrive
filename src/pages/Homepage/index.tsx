@@ -76,7 +76,6 @@ interface Profile {
 }
 
 const Homepage = () => {
-  
   const getHomeGames = async () => {
     if (id) {
       const get = await homepageGames.allGames(id);
@@ -87,8 +86,8 @@ const Homepage = () => {
   };
 
   const navigate = useNavigate();
-  function goToAllGames() {
-    navigate("/allgames");
+  function goToAllGames(id: string) {
+    navigate(`/allgames/${id}`);
   }
   function goToProfile() {
     navigate("/profile");
@@ -146,12 +145,10 @@ const Homepage = () => {
     }
   }
 
-
   useEffect(() => {
     if (id) {
       getProfileById();
     }
-    console.log(`rodou`)
     getHomeGames();
   }, [control]);
 
@@ -166,7 +163,6 @@ const Homepage = () => {
         <S.HomepageGameTitle>Favorite Games</S.HomepageGameTitle>
         <S.HomepageGameDiv>
           {gamesProfile?.favoriteGames?.games?.map((game, index) => (
-
             <S.uniqueCardGame key={index}>
               <S.iconFavorite>
                 <AiFillHeart
@@ -177,7 +173,7 @@ const Homepage = () => {
                     favoriteGame.favorite(id ?? "", game.id);
                     setControl(true);
                   }}
-                />  
+                />
               </S.iconFavorite>
               <img src={game.coverImageUrl} alt="" />
               <h5>{game.title}</h5>
@@ -189,19 +185,22 @@ const Homepage = () => {
         <S.HomepageGameDiv>
           {gamesProfile?.games?.map((game, index) => (
             <S.uniqueCardGame key={index}>
-              
-              
               <AiFillHeart
-              color={gamesProfile.favoriteGames?.games?.find((gameFav:Games)=>gameFav.id===game.id[0])?"red":"gray"}
-              size={20}
-              cursor="pointer"
-              onClick={() => {
-                favoriteGame.favorite(id??"", game.id[0]);
-                setControl(true);
-              }}
-            /> 
-              
-             
+                color={
+                  gamesProfile.favoriteGames?.games?.find(
+                    (gameFav: Games) => gameFav.id === game.id[0]
+                  )
+                    ? "red"
+                    : "gray"
+                }
+                size={20}
+                cursor="pointer"
+                onClick={() => {
+                  favoriteGame.favorite(id ?? "", game.id[0]);
+                  setControl(true);
+                }}
+              />
+
               <S.favoriteBox>
                 <h5>Nome: {game.title}</h5>
                 <h5>Gênero: {game.genre}</h5>
@@ -231,7 +230,13 @@ const Homepage = () => {
           <S.HomepageHeaderDetailsText>
             {dateDescription}
           </S.HomepageHeaderDetailsText>
-          <button onClick={goToAllGames}>MORE GAMES</button>
+          <button
+            onClick={() => {
+              goToAllGames(id ?? "");
+            }}
+          >
+            MORE GAMES
+          </button>
         </S.HomepageHeaderDetailsDate>
       </S.HomepageHeaderDetails>
       <Modal

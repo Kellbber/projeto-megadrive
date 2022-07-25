@@ -28,6 +28,7 @@ const createProfile = {
   .then((response: any)=> {
     return response;
   })
+  .catch((error:any)=>console.log(error))
 }
 
 const deleteProfile = {
