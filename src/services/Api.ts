@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://mega-api-prod.herokuapp.com/",
+  baseURL: "https://megadrive-projeto1-mod04-production.up.railway.app",
 });
 
 // intercepta o que vai as chamadas para o backend.

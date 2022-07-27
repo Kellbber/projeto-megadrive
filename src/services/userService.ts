@@ -2,7 +2,7 @@ import axios from "axios";
 import api from "./Api";
 import { User } from "types/user-type";
 import swal from "sweetalert";
-axios.defaults.baseURL = "http://mega-api-prod.herokuapp.com/";
+axios.defaults.baseURL = "https://megadrive-projeto1-mod04-production.up.railway.app";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 export const userService = {
