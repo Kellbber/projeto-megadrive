@@ -1,7 +1,8 @@
 import ButtonLarge from "components/ButtonLarge";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiFillDelete } from "react-icons/ai";
+import { BiPurchaseTag } from "react-icons/bi";
 import {
   RiArrowGoBackLine,
   RiDeleteBin5Line,
@@ -14,6 +15,7 @@ import {
   deleteProfile,
   favoriteGame,
   findProfileById,
+  PurchaseGame,
   updateProfile,
 } from "services/profileService";
 import swall from "sweetalert";
@@ -50,13 +52,12 @@ interface GamesProfile {
   favoriteGames?: {
     games?: Games[];
   };
-  games?: [
-    {
-      genre: string;
-      title: string;
-      id: string[];
-    }
-  ];
+  games?: gamesGenre[];
+}
+interface gamesGenre {
+  genre: string;
+  title: string[];
+  id: string[];
 }
 interface Games {
   id: string;
@@ -76,7 +77,6 @@ interface Profile {
 }
 
 const Homepage = () => {
-
   const getHomeGames = async () => {
     if (id) {
       const get = await homepageGames.allGames(id);
@@ -87,6 +87,7 @@ const Homepage = () => {
   };
 
   const navigate = useNavigate();
+
   function goToAllGames(id: string) {
     navigate(`/allgames/${id}`);
   }
@@ -112,6 +113,7 @@ const Homepage = () => {
   const getProfileById = async () => {
     const response = await findProfileById.profileById(id ?? "");
     setProfile(response.data);
+    setControl(false);
   };
 
   const deleteProfileSelected = async () => {
@@ -146,10 +148,10 @@ const Homepage = () => {
     }
   }
 
+
   useEffect(() => {
-    if (id) {
       getProfileById();
-    }
+    console.log('rodou')
     getHomeGames();
   }, [control]);
 
@@ -157,7 +159,6 @@ const Homepage = () => {
     ...DateTime.DATE_SHORT,
     weekday: "long",
   });
-
 
   return (
     <S.Homepage>
@@ -177,7 +178,7 @@ const Homepage = () => {
                   }}
                 />
               </S.iconFavorite>
-              <img src={game.coverImageUrl} alt="imagem do jogo"/>
+              <img src={game.coverImageUrl} alt="imagem do jogo" />
               <h5>{game.title}</h5>
               <p>Score: {game.imdbScore}</p>
             </S.uniqueCardGame>
@@ -185,30 +186,58 @@ const Homepage = () => {
         </S.HomepageGameDiv>
         <S.HomepageGameTitle>Purchased Games</S.HomepageGameTitle>
         <S.HomepageGameDiv>
-          {gamesProfile?.games?.map((game, index) => (
-            <S.uniqueCardGame key={index}>
-              <AiFillHeart
-                color={
-                  gamesProfile.favoriteGames?.games?.find(
-                    (gameFav: Games) => gameFav.id === game.id[0]
-                  )
-                    ? "red"
-                    : "gray"
-                }
-                size={20}
-                cursor="pointer"
-                onClick={() => {
-                  favoriteGame.favorite(id ?? "", game.id[0]);
-                  setControl(true);
-                }}
-              />
-
-              <S.favoriteBox>
-                <h5>Nome: {game.title}</h5>
-                <h5>Gênero: {game.genre}</h5>
-              </S.favoriteBox>
-            </S.uniqueCardGame>
-          ))}
+          {gamesProfile?.games?.map((game: gamesGenre, index) => {
+            return (
+              <S.uniqueCardGame key={index}>
+                <S.favoriteBox>
+                  <h5>{game.genre}</h5>
+                  <S.divGames>
+                    {game.title.map((title, index2) => {
+                      return (
+                        <S.divGames1>
+                          <S.divGames key={index2}>
+                            <h5>{title}</h5>
+                            <S.iconsFavorite>
+                              <AiFillHeart
+                                color={
+                                  gamesProfile.favoriteGames?.games?.find(
+                                    (gameFav: Games) => gameFav.title === title
+                                  )
+                                    ? "red"
+                                    : "gray"
+                                }
+                                size={20}
+                                cursor="pointer"
+                                onClick={() => {
+                                  favoriteGame.favorite(
+                                    id ?? "",
+                                    game.id[index2]
+                                  );
+                                  setControl(true);
+                                }}
+                              />
+                              <AiFillDelete
+                                size={20}
+                                cursor="pointer"
+                                onClick={ async () => {
+                                   await PurchaseGame.purchase(
+                                    profile?.id ?? "",
+                                    game.id[index2]
+                                  )
+                                  
+                                  setControl(true)}
+                                }
+                              />
+                            </S.iconsFavorite>
+                          </S.divGames>
+                        </S.divGames1>
+                      );
+                    })}
+                  </S.divGames>
+                </S.favoriteBox>
+              </S.uniqueCardGame>
+            );
+          })}
         </S.HomepageGameDiv>
       </S.HomepageContent>
       <S.HomepageHeaderDetails>

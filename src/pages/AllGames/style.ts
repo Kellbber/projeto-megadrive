@@ -19,7 +19,7 @@ export const allGamesContent = styled.main`
 
     width: 100%;
     padding: 1rem;
-
+ 
     height: 100vh;
     box-sizing: border-box;
     h1 {

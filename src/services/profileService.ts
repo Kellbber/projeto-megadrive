@@ -63,7 +63,7 @@ const updateProfile = {
 }
 
 const favoriteGame = {
-  favorite:(profileId:string, gameId: string)=>{
+  favorite:async (profileId:string, gameId: string)=>{
 
   api.patch(`/profile/favoriteGame/${profileId}`,{
     favoriteGameId: gameId,

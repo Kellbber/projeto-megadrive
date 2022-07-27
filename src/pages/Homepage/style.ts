@@ -60,11 +60,11 @@ export const uniqueCardGame = styled.div`
   ${({ theme }) => css`
     margin-left: 1rem;
     background-color: ${theme.colors.baseBg2};
-    width: 10%;
-    height: 160px;
+    width: 15%;
+    height: 80%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     border-radius: 1rem;
     margin-bottom: 1rem;
@@ -153,7 +153,14 @@ export const HomepageHeaderDetailsText = styled.h2`
     cursor: pointer;
   `}
 `;
+export const iconsFavorite = styled.div`
+width: 20%;
+display: flex;
+justify-content: flex-end;
+margin: 1rem;
 
+
+`
 export const HomepageGameTitle = styled.h2`
   ${({ theme }) => css`
     font-family: ${theme.constants.headingFontFamily};
@@ -257,7 +264,30 @@ export const BoxProfileForm = styled.div<ColorInput>`
 `;
 
 export const favoriteBox = styled.div`
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+
+`
+export const divGames = styled.div`
+
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+
+`
+export const divGames1 = styled.div`
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  
 `
