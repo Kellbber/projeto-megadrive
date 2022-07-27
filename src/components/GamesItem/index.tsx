@@ -7,7 +7,8 @@ import Modal from "react-modal";
 import { useNavigate } from 'react-router-dom';
 import { deleteGame, updateGame } from "services/gamesService";
 import { findGenres } from "services/genreService";
-import { findProfileById } from "services/profileService";
+import { favoriteGame, findProfileById, PurchaseGame } from "services/profileService";
+
 import * as S from "./style";
 Modal.setAppElement("#root");
 const customStyles = {
@@ -39,6 +40,8 @@ interface Games {
   trailerYoutubeUrl: string;
   genreName: string;
 }
+
+
 interface game{
  
     id: string;
@@ -82,11 +85,12 @@ interface Profiles {
 
 
 
-const Card = (props:{user: User, game:game, profile: string, setControl:Dispatch<SetStateAction<boolean>>}) => {
+const Card = (props:{user: User, game:game, profile: string, purchased:boolean, setControl:Dispatch<SetStateAction<boolean>>}) => {
 
   const navigate = useNavigate();
 
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [modalIsOpen2, setIsOpen2]=useState<boolean>(false);
   const [genres, setGenres] = useState<Genres[]>([]);
   const [profile, setProfile] = useState<Profiles>();
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -105,7 +109,7 @@ const Card = (props:{user: User, game:game, profile: string, setControl:Dispatch
     
    await updateGame.update(props.game.id, upGame);
    props.setControl(true);
-   console.log(props.setControl)
+   closeModal();
     
 
     
@@ -114,6 +118,7 @@ const Card = (props:{user: User, game:game, profile: string, setControl:Dispatch
   const getProfileById = async () => {
     const response = await findProfileById.profileById(props.profile?? "");
     setProfile(response.data);
+   
   };
   
   function openModal() {
@@ -122,6 +127,12 @@ const Card = (props:{user: User, game:game, profile: string, setControl:Dispatch
   function closeModal() {
     setIsOpen(false);
   }
+  function openModal2() {
+    setIsOpen2(true);
+  }
+  function closeModal2() {
+    setIsOpen2(false);
+  }
 
   const getAllGenres = async () => {
     const response = await findGenres.allGenres();
@@ -129,22 +140,27 @@ const Card = (props:{user: User, game:game, profile: string, setControl:Dispatch
     setGenres(response.data);
   };
  
-    
+
   useEffect(() => {
     getAllGenres();
-    getProfileById()
+    getProfileById();
   }, []);
+
   return (
     <S.GamesItem>
-      <S.GamesItemImage src={props.game.coverImageUrl} alt="Imagem do jogo" />
+      <S.GamesItemImage src={props.game.coverImageUrl} alt="Imagem do jogo" onClick={openModal2} />
       <S.Games>
         <h2>{props.game.title}</h2>
-        <p>{props.game.imdbScore}</p>
+        <p>Score:  {props.game.imdbScore}</p>
       </S.Games>
       <S.admIcons>
 
         <div>
-          <BiPurchaseTag size={20} cursor="pointer" />
+          <BiPurchaseTag size={20} cursor="pointer" display={props.purchased?"none":"flex"}
+          onClick={() => {
+            PurchaseGame.purchase(props.profile ?? "", props.game.id);
+            props.setControl(true);
+          }} />
         </div>
         <div>
           <FiEdit
@@ -219,6 +235,47 @@ const Card = (props:{user: User, game:game, profile: string, setControl:Dispatch
           <SaveButton type="submit" />
         </S.ModalStyle>
       </Modal>
+      <Modal
+        isOpen={modalIsOpen2}
+        onRequestClose={closeModal}
+        style={customStyles}
+    
+      >      
+
+        <S.DetailsContent>
+        <S.BoxProfileBack>
+      <img onClick={closeModal2} />
+    </S.BoxProfileBack>
+          <S.title>
+          {props.game.title}
+          </S.title>
+          <S.img>
+            <img src={props.game.coverImageUrl} alt="imagem do jogo" />
+            <S.description>
+              {props.game.description}
+            </S.description>
+            <S.resume>
+              <h3>Year:</h3>
+              <p>{props.game.year}</p>
+              <h3>Score:</h3>
+              <p>{props.game.imdbScore}</p>
+              <h3>Genre:</h3>
+              <p>{props.game.genres[0].name}</p>
+            </S.resume>
+           
+          </S.img>
+          <S.link>
+          <h3>Gameplay:</h3>
+          <a href={props.game.gameplayYoutubeUrl} target="_blank">clique aqui</a>
+          </S.link>
+          <S.link>
+          <h3>Trailer:</h3>
+          <a href={props.game.trailerYoutubeUrl} target="_blank">clique aqui</a>
+          </S.link>
+
+        </S.DetailsContent>
+
+        </Modal>
     </S.GamesItem>
   );
 };

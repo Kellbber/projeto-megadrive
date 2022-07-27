@@ -1,6 +1,6 @@
 import api from './Api'
 import swal from 'sweetalert'
-import { games } from 'mocks/games';
+
 
 interface Games{
 
@@ -20,6 +20,20 @@ const findAllGames ={
         return response;
     })
     .catch((error:any)=> console.log(error))
+}
+
+const findUnique ={
+  oneGame: (id:string)=>
+  api.get(`/games/${id}`)
+  .then((response:any)=>response)
+  .catch((error:any)=>{
+    swal({
+        title: "Erro!",
+        text: `${error.message}`,
+        icon: "error",
+        timer: 5000,
+      })
+})
 }
 
 const deleteGame ={
@@ -90,4 +104,4 @@ const createGame = {
   })
 }
 
-export {findAllGames, deleteGame, updateGame, createGame};
+export {findAllGames, deleteGame, updateGame, createGame, findUnique};

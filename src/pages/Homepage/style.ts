@@ -74,6 +74,7 @@ export const uniqueCardGame = styled.div`
       width: 80%;
       margin-top: 1rem;
       border-radius: 1rem;
+      
     }
   `}
 `;

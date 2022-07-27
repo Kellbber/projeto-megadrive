@@ -16,7 +16,7 @@ export const allGames = styled.section`
 `;
 export const allGamesContent = styled.main`
   ${({ theme }) => css`
-    background-color: ${theme.colors.baseBg2};
+
     width: 100%;
     padding: 1rem;
 
@@ -25,6 +25,13 @@ export const allGamesContent = styled.main`
     h1 {
       font-family: ${theme.constants.headingFontFamily};
       font-size: ${theme.constants.headingFontSize};
+      text-align: center;
+    }
+    section{
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
     }
   `}
 `;
@@ -34,13 +41,13 @@ export const adminSettings = styled.div`
 
     height: 30px;
     border-radius: 1rem;
-    align-items: flex-end;
+    
     display: flex;
 
     background-color: ${theme.colors.baseBg1};
     height: 30px;
     border-radius: 1rem;
-    align-items: center;
+    align-self: flex-end;
     justify-content: space-around;
   `}
 `;

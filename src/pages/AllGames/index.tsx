@@ -2,9 +2,9 @@ import Card from "components/GamesItem";
 import SaveButton from "components/SaveButton";
 import React, { useEffect, useState } from "react";
 import { AiOutlineRollback } from "react-icons/ai";
-import { IoLogoGameControllerB } from 'react-icons/io';
-import { RiAddCircleLine } from 'react-icons/ri';
-import {BiGame} from 'react-icons/bi'
+import { IoLogoGameControllerB } from "react-icons/io";
+import { RiAddCircleLine } from "react-icons/ri";
+import { BiGame } from "react-icons/bi";
 import Modal from "react-modal";
 import { useNavigate, useParams } from "react-router-dom";
 import { userLoggedService } from "services/authService";
@@ -49,7 +49,17 @@ interface Profiles {
   favoriteGameId?: string;
   userId: string;
 }
-
+interface GamesP {
+  id: string;
+  title: string;
+  coverImageUrl: string;
+  description: string;
+  year: number;
+  imdbScore: number;
+  gameplayYoutubeUrl: string;
+  trailerYoutubeUrl: string;
+  genreName: string;
+}
 const customStyles = {
   content: {
     top: "50%",
@@ -120,8 +130,8 @@ const AllGames = () => {
       }
     }
   };
-  function goToCreateGenre (id:string){
-    navigate(`/creategenre/${id}`)
+  function goToCreateGenre(id: string) {
+    navigate(`/creategenre/${id}`);
   }
   interface UpGame {
     title: string;
@@ -173,7 +183,6 @@ const AllGames = () => {
     getAllGames();
     getUserLogged();
     getAllGenres();
-    
   }, [controlRefetch]);
 
   function goToHomePage(id: string) {
@@ -182,6 +191,7 @@ const AllGames = () => {
   return (
     <S.allGames>
       <S.allGamesContent>
+        <section>
         <S.adminSettings>
           <AiOutlineRollback
             size={25}
@@ -196,33 +206,42 @@ const AllGames = () => {
             onClick={openModal}
             cursor="pointer"
           />
-          <BiGame size={25}
-          color="white"
-          display={userLogged.isAdmin?"flex":"none"}
-          cursor="pointer"
-          onClick={() => {
-            goToCreateGenre(id ?? "");
-          }}/>
-        </S.adminSettings>
-
-        <h1>All Games</h1>
-        {games?.map((game: Games, index) => (
-          
-          <Card
-            setControl={setControlRefetch}
-            game={game}
-            key={index}
-            user={userLogged}
-            profile={profile?.id??""}
+          <BiGame
+            size={25}
+            color="white"
+            display={userLogged.isAdmin ? "flex" : "none"}
+            cursor="pointer"
+            onClick={() => {
+              goToCreateGenre(id ?? "");
+            }}
           />
 
-        ))}
+        </S.adminSettings>
+        </section>
+        <h1>All Games</h1>
+
+        {games?.map((game: Games, index) => {
+          let purchasedGame = false;
+          profile?.games?.map((gamesP: GamesP) => { if(gamesP.id === game.id){
+            purchasedGame=true;
+          }});
+          
+          return (
+            <Card
+              setControl={setControlRefetch}
+              game={game}
+              key={index}
+              user={userLogged}
+              profile={profile?.id ?? ""}
+              purchased={purchasedGame}
+            />
+          );
+        })}
       </S.allGamesContent>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-
       >
         <S.UserModal onSubmit={handleSubmit}>
           <S.buttonModal>

@@ -76,10 +76,11 @@ interface Profile {
 }
 
 const Homepage = () => {
+
   const getHomeGames = async () => {
     if (id) {
       const get = await homepageGames.allGames(id);
-      console.log(get.data);
+
       setGamesProfile(get.data);
       setControl(false);
     }
@@ -157,6 +158,7 @@ const Homepage = () => {
     weekday: "long",
   });
 
+
   return (
     <S.Homepage>
       <S.HomepageContent>
@@ -175,7 +177,7 @@ const Homepage = () => {
                   }}
                 />
               </S.iconFavorite>
-              <img src={game.coverImageUrl} alt="" />
+              <img src={game.coverImageUrl} alt="imagem do jogo"/>
               <h5>{game.title}</h5>
               <p>Score: {game.imdbScore}</p>
             </S.uniqueCardGame>

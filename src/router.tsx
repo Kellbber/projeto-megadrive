@@ -9,7 +9,12 @@ import AllGames from "pages/AllGames";
 import CreateProfilePage from "pages/CreateProfilePage";
 import CreateGenre from "pages/CreateGenre";
 
+
 const Router = () => {
+  interface props{
+    id: string;
+    profile: string;
+  }
   return (
     <Routes>
       <Route path={RoutePath.START} element={<Login/>} />
@@ -19,6 +24,7 @@ const Router = () => {
       <Route path={RoutePath.GAMES} element={<AllGames/>}/>
       <Route path={RoutePath.CREATE_PROFILE} element={<CreateProfilePage/>}/>
       <Route path={RoutePath.CREATE_GENRE} element={<CreateGenre/>}/>
+     
     </Routes>
   );
 };

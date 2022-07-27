@@ -64,7 +64,7 @@ const updateProfile = {
 
 const favoriteGame = {
   favorite:(profileId:string, gameId: string)=>{
-    console.log(gameId)
+
   api.patch(`/profile/favoriteGame/${profileId}`,{
     favoriteGameId: gameId,
   })
@@ -90,4 +90,31 @@ const favoriteGame = {
 }
 }
 
-export { findAllProfiles, findProfileById, createProfile, deleteProfile, updateProfile, favoriteGame};
+const PurchaseGame ={
+  purchase:(profileId: string, gameId:string)=>{
+    api.patch(`/profile/${profileId}`,{
+      gameId: gameId
+    })
+    .then((response:any)=> 
+    {
+      swal({
+        title: "success",
+        text: `${response.message}`,
+        icon: "success",
+        timer: 7000,
+      })
+   
+    })
+  
+    .catch((error: any) => {
+      swal({
+        title: "Erro!",
+        text: `${error.message}`,
+        icon: "error",
+        timer: 7000,
+      })
+    })
+  }
+}
+
+export { findAllProfiles, findProfileById, createProfile, deleteProfile, updateProfile, favoriteGame, PurchaseGame};
