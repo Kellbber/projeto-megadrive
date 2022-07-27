@@ -13,15 +13,19 @@ export const GamesItem = styled.div`
 
     margin-bottom: 1rem;
 
-    div {
+
+  `}
+`;
+
+export const Games = styled.div`
+   
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 80%;
-    }
-  `}
-`;
+      width: 100%;
+    
+`
 export const admIcons = styled.div`
   display: flex;
   width: 100%;

@@ -1,9 +1,10 @@
-import ButtonLarge from "components/ButtonLarge";
 import Card from "components/GamesItem";
 import SaveButton from "components/SaveButton";
 import React, { useEffect, useState } from "react";
 import { AiOutlineRollback } from "react-icons/ai";
-import { FiSettings } from "react-icons/fi";
+import { IoLogoGameControllerB } from 'react-icons/io';
+import { RiAddCircleLine } from 'react-icons/ri';
+import {BiGame} from 'react-icons/bi'
 import Modal from "react-modal";
 import { useNavigate, useParams } from "react-router-dom";
 import { userLoggedService } from "services/authService";
@@ -119,6 +120,9 @@ const AllGames = () => {
       }
     }
   };
+  function goToCreateGenre (id:string){
+    navigate(`/creategenre/${id}`)
+  }
   interface UpGame {
     title: string;
     coverImageUrl: string;
@@ -169,6 +173,7 @@ const AllGames = () => {
     getAllGames();
     getUserLogged();
     getAllGenres();
+    
   }, [controlRefetch]);
 
   function goToHomePage(id: string) {
@@ -185,29 +190,39 @@ const AllGames = () => {
               goToHomePage(id ?? "");
             }}
           />
-          <FiSettings
+          <IoLogoGameControllerB
             size={25}
             display={userLogged.isAdmin ? "flex" : "none"}
             onClick={openModal}
             cursor="pointer"
           />
+          <BiGame size={25}
+          color="white"
+          display={userLogged.isAdmin?"flex":"none"}
+          cursor="pointer"
+          onClick={() => {
+            goToCreateGenre(id ?? "");
+          }}/>
         </S.adminSettings>
 
         <h1>All Games</h1>
         {games?.map((game: Games, index) => (
+          
           <Card
             setControl={setControlRefetch}
             game={game}
             key={index}
             user={userLogged}
+            profile={profile?.id??""}
           />
+
         ))}
       </S.allGamesContent>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
+
       >
         <S.UserModal onSubmit={handleSubmit}>
           <S.buttonModal>

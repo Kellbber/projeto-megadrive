@@ -1,6 +1,5 @@
-import React from 'react'
-import * as S from './style'
 import CreateProfile from '../../components/CreateProfile'
+import * as S from './style'
 const CreateProfilePage = () => {
   return (
     <S.Create>

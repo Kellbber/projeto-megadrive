@@ -6,6 +6,7 @@ export enum RoutePath {
     PROFILE= '/profile',
     CREATE_PROFILE = '/createprofile',
     ACCOUNT= '/createaccount',
+    CREATE_GENRE='/creategenre/:id',
     SETTINGS = "/settings",
     SETTINGS_USERS = "/settingsusers",
     SETTINGS_PROFILES = "/settingsprofiles",

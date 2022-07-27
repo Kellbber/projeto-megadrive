@@ -1,14 +1,14 @@
 import SaveButton from "components/SaveButton";
-import { ReactInstance, useEffect, useState } from "react";
-import { AiFillDelete, AiFillHeart } from "react-icons/ai";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
 import { BiPurchaseTag } from "react-icons/bi";
 import { FiEdit } from "react-icons/fi";
 import Modal from "react-modal";
+import { useNavigate } from 'react-router-dom';
 import { deleteGame, updateGame } from "services/gamesService";
 import { findGenres } from "services/genreService";
+import { findProfileById } from "services/profileService";
 import * as S from "./style";
-import {useNavigate, useParams} from 'react-router-dom'
 Modal.setAppElement("#root");
 const customStyles = {
   content: {
@@ -22,33 +22,7 @@ const customStyles = {
     borderRadius: `1rem`,
   },
 };
-interface cardProps {
-  game: {
-    id: string;
-    title: string;
-    coverImageUrl: string;
-    description: string;
-    year: number;
-    imdbScore: number;
-    gameplayYoutubeUrl: string;
-    trailerYoutubeUrl: string;
-    genres: [
-      {
-        name: string;
-        createdAt?: string;
-        updatedAt?: string;
-      }
-    ];
-  };
-  user: {
-    name: string;
-    email: string;
-    id: string;
-    isAdmin: boolean;
-  };
 
-
-}
 interface Genres {
   name: string;
   createdAt?: string;
@@ -92,13 +66,29 @@ interface User {
     isAdmin: boolean;
 
 }
-const Card = (props:{user: User, game:game, setControl:Dispatch<SetStateAction<boolean>>}) => {
-const {id} = useParams();
+
+interface Profiles {
+  id: string;
+  title: string;
+  imageUrl: string;
+  gameId?: string;
+  games?: [];
+  favoriteGames?: {
+    games?: Games[];
+  };
+  favoriteGameId?: string;
+  userId: string;
+}
+
+
+
+const Card = (props:{user: User, game:game, profile: string, setControl:Dispatch<SetStateAction<boolean>>}) => {
+
   const navigate = useNavigate();
 
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [genres, setGenres] = useState<Genres[]>([]);
-
+  const [profile, setProfile] = useState<Profiles>();
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const upGame: Games = {
@@ -117,10 +107,15 @@ const {id} = useParams();
    props.setControl(true);
    console.log(props.setControl)
     
-    
+
     
     
   }
+  const getProfileById = async () => {
+    const response = await findProfileById.profileById(props.profile?? "");
+    setProfile(response.data);
+  };
+  
   function openModal() {
     setIsOpen(true);
   }
@@ -133,21 +128,21 @@ const {id} = useParams();
 
     setGenres(response.data);
   };
+ 
+    
   useEffect(() => {
     getAllGenres();
-    
+    getProfileById()
   }, []);
   return (
     <S.GamesItem>
       <S.GamesItemImage src={props.game.coverImageUrl} alt="Imagem do jogo" />
-      <div>
+      <S.Games>
         <h2>{props.game.title}</h2>
         <p>{props.game.imdbScore}</p>
-      </div>
+      </S.Games>
       <S.admIcons>
-        <div>
-          <AiFillHeart size={20} cursor="pointer" />
-        </div>
+
         <div>
           <BiPurchaseTag size={20} cursor="pointer" />
         </div>
@@ -165,9 +160,10 @@ const {id} = useParams();
             size={20}
             display={props.user.isAdmin ? "flex" : "none"}
             cursor="pointer"
-            onClick={() => {
-              deleteGame.delete(props.game.id);
+            onClick={async () => {
+             await deleteGame.delete(props.game.id);
               props.setControl(true);
+
             }}
           />
         </div>

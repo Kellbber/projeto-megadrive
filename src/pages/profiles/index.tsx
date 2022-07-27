@@ -1,9 +1,8 @@
 import SaveButton from "components/SaveButton";
 import { useEffect, useState } from "react";
-import { AiOutlineRollback, AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineLogout, AiOutlineRollback } from "react-icons/ai";
 import { FiSettings } from "react-icons/fi";
 import { IoPersonAddOutline } from "react-icons/io5";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { userLoggedService } from "services/authService";

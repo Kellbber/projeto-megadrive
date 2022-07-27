@@ -10,15 +10,7 @@ import * as S from './style';
 const CreateProfile = () => {
 
 const Navigate = useNavigate();
-    const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
-    function openModal() {
-        setIsOpen(true);
-      }
-
-    function closeModal() {
-        setIsOpen(false);
-      }
 
       async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();

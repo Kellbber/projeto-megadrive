@@ -7,6 +7,7 @@ import CreateAccount from "pages/CreateAccount";
 import Profile from "pages/profiles";
 import AllGames from "pages/AllGames";
 import CreateProfilePage from "pages/CreateProfilePage";
+import CreateGenre from "pages/CreateGenre";
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
       <Route path={RoutePath.PROFILE} element={<Profile/>}/>
       <Route path={RoutePath.GAMES} element={<AllGames/>}/>
       <Route path={RoutePath.CREATE_PROFILE} element={<CreateProfilePage/>}/>
+      <Route path={RoutePath.CREATE_GENRE} element={<CreateGenre/>}/>
     </Routes>
   );
 };
